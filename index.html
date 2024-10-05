@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Spin Cocktail</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #8e44ad, #9b59b6); /* Softer violet gradient */
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            transition: background-color 0.5s ease-in-out;
+        }
+
+        header {
+            padding: 20px;
+        }
+
+        /* Full-width banner */
+        .banner {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            transition: transform 0.4s ease;
+        }
+
+        /* Wallet Connect Button under the banner, positioned top-right */
+        .wallet-connect {
+            position: absolute;
+            top: 95px;
+            right: 20px;
+            padding: 15px 30px;
+            background-color: #31c2b1;
+            color: #fff;
+            border-radius: 10px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .wallet-connect:hover {
+            background-color: #29a699; /* Darken on hover */
+            transform: scale(1.05);
+        }
+
+        h1 {
+            color: #ffcc00;
+            font-size: 36px;
+            margin-top: 30px; /* Adjusted to make space below banner */
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        p.tagline {
+            font-size: 32px; /* Increased font size */
+            font-weight: bold; /* Make the tagline stand out */
+            margin-top: 10px;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+        }
+
+        /* Keyframes for animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .wheel-container {
+            margin-top: 40px;
+            width: 400px;
+            height: 400px;
+            background: url('wheel-image.png') no-repeat center center;
+            background-size: contain;
+            margin: 0 auto;
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+        }
+
+        /* Resize the arrow and position it to the left */
+        .arrow-left {
+            position: absolute;
+            left: -200px; /* Adjusted based on your request */
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            width: 200px; /* Adjusted size */
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .arrow-left:hover {
+            transform: scale(1.1);
+        }
+
+        /* Positioning the mascot on the right */
+        .mascot-right {
+            position: absolute;
+            right: -250px; /* Adjusted based on your request */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 200px; /* Adjusted size */
+            height: auto;
+            opacity: 0;
+            animation: fadeIn 2.5s forwards;
+        }
+
+        .amount-input {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .input-field {
+            padding: 10px;
+            font-size: 18px;
+            width: 200px;
+            margin-top: 10px;
+        }
+
+        .confirm-button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #ffcc00;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .confirm-button:hover {
+            background-color: #e5b700;
+            transform: scale(1.05);
+        }
+
+        footer {
+            margin-top: 40px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Full-width banner -->
+        <img src="banner-image.png" alt="Crypto Spin Cocktail" class="banner">
+        <!-- Wallet Connect Button positioned below banner -->
+        <button class="wallet-connect" id="connectWallet">Connect Wallet</button>
+        <h1>CRYPTO SPIN COCKTAIL</h1>
+        <p class="tagline">Connect, Spin and get random memecoin !!!</p>
+    </header>
+
+    <!-- Wheel Section with arrow and mascot -->
+    <div class="wheel-container" id="wheel">
+        <!-- Arrow PNG for Spin button -->
+        <img src="arrow-image.png" alt="Spin" class="arrow-left" id="spinArrow">
+        <!-- Fun mascot on the right -->
+        <img src="mascot-image.png" alt="Mascot" class="mascot-right">
+    </div>
+
+    <!-- Enter amount after clicking Spin -->
+    <div class="amount-input" id="amountInputSection">
+        <input type="number" id="investmentAmount" class="input-field" placeholder="Enter Amount">
+        <button class="confirm-button" id="confirmInvestment">Confirm</button>
+    </div>
+
+    <footer>
+        <p>© 2024 Crypto Spin Cocktail. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Détecter si l'utilisateur est sur mobile
+        function isMobile() {
+            return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        }
+
+        const connectWalletButton = document.getElementById('connectWallet');
+        const spinArrow = document.getElementById('spinArrow');
+        const amountInputSection = document.getElementById('amountInputSection');
+        const confirmInvestmentButton = document.getElementById('confirmInvestment');
+        let userWalletConnected = false; // Simulate wallet connection
+
+        // Wallet connection
+        connectWalletButton.addEventListener('click', () => {
+            if (isMobile()) {
+                // Ouvrir Phantom Wallet sur mobile si l'app est installée
+                window.open('phantom://open', '_self');
+            } else {
+                // Simuler la connexion au portefeuille sur ordinateur
+                alert('Please install the Phantom Wallet extension.');
+                userWalletConnected = true; 
+            }
+        });
+
+        // When the user clicks on the arrow to "Spin"
+        spinArrow.addEventListener('click', () => {
+            if (!userWalletConnected) {
+                alert('Please connect your wallet before spinning.');
+                return;
+            }
+
+            // Hide the arrow and show the amount input
+            spinArrow.style.display = 'none';
+            amountInputSection.style.display = 'block';
+        });
+
+        // Confirm investment amount
+        confirmInvestmentButton.addEventListener('click', () => {
+            const amount = document.getElementById('investmentAmount').value;
+            if (amount && !isNaN(amount) && amount > 0) {
+                alert(`You have invested ${amount} in random memecoins.`);
+                // Add transaction logic here
+            } else {
+                alert('Please enter a valid amount.');
+            }
+        });
+    </script>
+</body>
+</html>
